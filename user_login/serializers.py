@@ -33,3 +33,8 @@ class LoginSerializer(serializers.ModelSerializer):
 			raise exceptions.ValidationError(msg)
 
 		return data 
+
+class LogoutSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = User
+		fields = ('username', 'password')
