@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/user_login/', views.LoginView.as_view()),
     path('api/user_logout/', views.LogoutView.as_view()),
+    path('api/update_profile/', views.UpdateProfileView.as_view()),
 ]
