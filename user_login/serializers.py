@@ -16,12 +16,10 @@ class LoginSerializer(serializers.ModelSerializer):
     def validate(self, data):
         username = data.get("username", "")
         password = data.get("password", "")
-
         if username and password:
             user = authenticate(username=username, password=password)
             if user:
                 if user.is_active:
-
                     data["user"] = user
                     print ("User Data", data["user"])
                 else:
@@ -40,7 +38,7 @@ class LoginSerializer(serializers.ModelSerializer):
 class LogoutSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'password')
+        fields = ()
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -60,7 +58,8 @@ class UpdateUserProfileSerializer(serializers.ModelSerializer):
         fields = ('first_name', 'last_name', 'country_code', 'phone_num', 'dob', 'gender',)
 
     def update(self, instance, data):
-        if instance.userprofile.user_id:
+        # import pdb;pdb.set_trace() #for debugging
+        if instance:
             instance.first_name = data.get('first_name', instance.first_name)
             instance.last_name = data.get('last_name', instance.last_name)
             instance.userprofile.country_code = data.get('first_name', instance.userprofile.country_code)
@@ -69,7 +68,7 @@ class UpdateUserProfileSerializer(serializers.ModelSerializer):
             instance.userprofile.dob = data.get('dob', instance.userprofile.dob)
             instance.save()
         else:
-            message = "Serializers User not found with your credentials.!!!!"
+            message = "Serializers User not found with your credentials."
             raise exceptions.ValidationError(message)
 
         return instance
